@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像生成アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI画像生成ツール</h1>
+        </header>
+
+        <main>
+            <!-- APIキー入力セクション -->
+            <section id="api-key-section" class="section">
+                <h2>OpenAI APIキーを入力</h2>
+                <div class="input-group">
+                    <input type="password" id="api-key-input" placeholder="sk-..." autocomplete="off">
+                    <button id="save-api-key" class="btn primary">保存</button>
+                </div>
+                <p class="hint">※APIキーはあなたのデバイスにのみ保存され、外部に送信されません</p>
+                <div id="api-key-status" class="status-message"></div>
+            </section>
+
+            <!-- 設定セクション（最初は非表示） -->
+            <section id="settings-section" class="section hidden">
+                <h2>画像設定</h2>
+                
+                <!-- サイズ選択 -->
+                <div class="setting-group">
+                    <h3>サイズ選択</h3>
+                    <div class="options-container">
+                        <div class="option-card" data-value="1024x1024">
+                            <div class="option-icon square-icon"></div>
+                            <div class="option-label">正方形 (1024x1024)</div>
+                        </div>
+                        <div class="option-card" data-value="1536x1024">
+                            <div class="option-icon landscape-icon"></div>
+                            <div class="option-label">横長 (1536x1024)</div>
+                        </div>
+                        <div class="option-card" data-value="1024x1536">
+                            <div class="option-icon portrait-icon"></div>
+                            <div class="option-label">縦長 (1024x1536)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 品質選択 -->
+                <div class="setting-group">
+                    <h3>品質選択</h3>
+                    <div class="options-container">
+                        <div class="option-card" data-value="standard">
+                            <div class="option-icon"><i class="fas fa-image"></i></div>
+                            <div class="option-label">標準</div>
+                        </div>
+                        <div class="option-card" data-value="hd">
+                            <div class="option-icon"><i class="fas fa-image"></i><i class="fas fa-star quality-star"></i></div>
+                            <div class="option-label">高品質</div>
+                        </div>
+                        <div class="option-card" data-value="auto">
+                            <div class="option-icon"><i class="fas fa-magic"></i></div>
+                            <div class="option-label">自動 (推奨)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- プロンプト入力 -->
+                <div class="setting-group">
+                    <h3>プロンプト入力</h3>
+                    <div class="prompt-tags">
+                        <span class="tag" data-tag="写実的な写真">写実的な写真</span>
+                        <span class="tag" data-tag="アニメ風">アニメ風</span>
+                        <span class="tag" data-tag="水彩画">水彩画</span>
+                        <span class="tag" data-tag="油絵">油絵</span>
+                        <span class="tag" data-tag="夕暮れの光">夕暮れの光</span>
+                        <span class="tag" data-tag="鮮やかな色彩">鮮やかな色彩</span>
+                        <span class="tag" data-tag="モノクローム">モノクローム</span>
+                        <span class="tag" data-tag="ファンタジー">ファンタジー</span>
+                        <span class="tag" data-tag="サイバーパンク">サイバーパンク</span>
+                        <span class="tag" data-tag="ミニマリスト">ミニマリスト</span>
+                    </div>
+                    <textarea id="prompt-input" placeholder="例: 夕暮れの海辺を散歩する猫、オレンジ色の空、波の音、落ち着いた雰囲気..."></textarea>
+                    <p class="hint">タグをクリックしてプロンプトに追加できます。具体的な説明や細部の指定を含めるとより良い結果が得られます。</p>
+                </div>
+                
+                <!-- 生成ボタン -->
+                <div class="action-buttons">
+                    <button id="generate-button" class="btn primary">画像を生成</button>
+                </div>
+            </section>
+
+            <!-- 結果表示セクション（最初は非表示） -->
+            <section id="result-section" class="section hidden">
+                <h2>生成結果</h2>
+                <div class="loading-container hidden">
+                    <div class="loading-spinner"></div>
+                    <p>画像を生成中です...</p>
+                </div>
+                <div class="result-container hidden">
+                    <div class="result-image-container">
+                        <img id="result-image" src="" alt="生成された画像">
+                    </div>
+                    <div class="result-actions">
+                        <button id="save-image" class="btn secondary"><i class="fas fa-download"></i> 保存</button>
+                        <button id="new-image" class="btn primary"><i class="fas fa-plus"></i> 新しい画像を生成</button>
+                    </div>
+                </div>
+                <div id="error-message" class="error-message hidden"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>画像はOpenAI APIを使用して生成されています。モデル: gpt-image-1</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
