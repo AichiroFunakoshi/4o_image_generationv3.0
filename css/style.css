@@ -1,0 +1,394 @@
+/* 基本スタイル */
+:root {
+    --primary-color: #4a6cf7;
+    --primary-hover: #3a5ce6;
+    --secondary-color: #6c757d;
+    --secondary-hover: #5a6268;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --dark-bg: #212529;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* ヘッダー */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+/* メインセクション */
+.section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--box-shadow);
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+.section h3 {
+    margin: 15px 0;
+    font-size: 1.2rem;
+}
+
+/* API キー入力フォーム */
+.input-group {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.hint {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-top: 8px;
+}
+
+.status-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+}
+
+.status-message.success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: var(--success-color);
+}
+
+.status-message.error {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: var(--danger-color);
+}
+
+/* ボタン */
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn.secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* 設定オプション */
+.setting-group {
+    margin-bottom: 30px;
+}
+
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.option-card {
+    width: calc(33.333% - 10px);
+    min-width: 150px;
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.option-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.option-card.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(74, 108, 247, 0.1);
+}
+
+.option-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.quality-star {
+    position: absolute;
+    top: 0;
+    right: 25%;
+    font-size: 1rem;
+    color: gold;
+}
+
+.option-label {
+    font-weight: 500;
+}
+
+/* プロンプトエリア */
+.prompt-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.tag {
+    padding: 6px 12px;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tag:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* アクションボタン */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.action-buttons .btn {
+    min-width: 180px;
+}
+
+/* 画像サイズアイコン */
+.square-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    border: 2px solid var(--primary-color);
+}
+
+.landscape-icon {
+    width: 60px;
+    height: 40px;
+    margin: 0 auto;
+    border: 2px solid var(--primary-color);
+}
+
+.portrait-icon {
+    width: 40px;
+    height: 60px;
+    margin: 0 auto;
+    border: 2px solid var(--primary-color);
+}
+
+/* 結果セクション */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(74, 108, 247, 0.2);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-container {
+    text-align: center;
+}
+
+.result-image-container {
+    margin: 20px 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    max-width: 100%;
+}
+
+.result-image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.error-message {
+    padding: 15px;
+    background-color: rgba(220, 53, 69, 0.2);
+    color: var(--danger-color);
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px 0;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ユーティリティクラス */
+.hidden {
+    display: none;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .section {
+        padding: 20px;
+    }
+    
+    .option-card {
+        width: calc(50% - 10px);
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .result-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .option-card {
+        width: 100%;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .input-group input {
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .input-group .btn {
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+}
