@@ -35,12 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // サイズ選択のイベントリスナー
-    document.querySelectorAll('.setting-group:nth-child(1) .option-card').forEach(card => {
+    const sizeCards = document.querySelectorAll('.setting-group:nth-of-type(1) .option-card');
+    sizeCards.forEach(card => {
         card.addEventListener('click', () => selectOption(card, 'size'));
     });
     
     // 品質選択のイベントリスナー
-    document.querySelectorAll('.setting-group:nth-child(2) .option-card').forEach(card => {
+    const qualityCards = document.querySelectorAll('.setting-group:nth-of-type(2) .option-card');
+    qualityCards.forEach(card => {
         card.addEventListener('click', () => selectOption(card, 'quality'));
     });
     
@@ -126,11 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // デフォルトオプションの選択
     function selectDefaultOptions() {
         // サイズのデフォルト選択
-        const defaultSizeCard = document.querySelector(`.setting-group:nth-child(1) .option-card[data-value="${settings.size}"]`);
+        const defaultSizeCard = document.querySelector(`.setting-group:nth-of-type(1) .option-card[data-value="${settings.size}"]`);
         if (defaultSizeCard) defaultSizeCard.classList.add('selected');
         
         // 品質のデフォルト選択
-        const defaultQualityCard = document.querySelector(`.setting-group:nth-child(2) .option-card[data-value="${settings.quality}"]`);
+        const defaultQualityCard = document.querySelector(`.setting-group:nth-of-type(2) .option-card[data-value="${settings.quality}"]`);
         if (defaultQualityCard) defaultQualityCard.classList.add('selected');
     }
     
