@@ -185,21 +185,30 @@ document.addEventListener('DOMContentLoaded', () => {
         hideElement(errorMessage);
         
         try {
-            // OpenAI API呼び出し - 正しいエンドポイント 'generations' を使用
+            // 最小限のパラメータでOpenAI APIを呼び出し
+            const requestBody = {
+                model: settings.model,
+                prompt: prompt,
+                n: 1
+            };
+            
+            // サイズパラメータが設定されている場合は追加
+            if (settings.size) {
+                requestBody.size = settings.size;
+            }
+            
+            // 品質パラメータが設定されている場合は追加
+            if (settings.quality && settings.quality !== 'auto') {
+                requestBody.quality = settings.quality;
+            }
+            
             const response = await fetch('https://api.openai.com/v1/images/generations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${settings.apiKey}`
                 },
-                body: JSON.stringify({
-                    model: settings.model,
-                    prompt: prompt,
-                    size: settings.size,
-                    quality: settings.quality,
-                    n: 1 // 生成する画像の数
-                    // response_formatパラメータを削除
-                })
+                body: JSON.stringify(requestBody)
             });
             
             const data = await response.json();
@@ -208,18 +217,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.error?.message || 'APIエラーが発生しました');
             }
             
-            // 画像の表示（URL形式として扱う）
-            // 注意: CORSの問題が発生する可能性があります
-            // その場合はこの下のコメントアウトされた代替方法を試してください
-            const imageUrl = data.data[0].url;
+            // APIからのレスポンスをコンソールに出力（デバッグ用）
+            console.log('API Response:', data);
             
-            // CORSバイパス用のプロキシを使用して画像を表示
-            const corsProxyUrl = 'https://corsproxy.io/?';
-            resultImage.src = corsProxyUrl + encodeURIComponent(imageUrl);
-            
-            // 結果表示
-            hideElement(loadingContainer);
-            showElement(resultContainer);
+            // データの構造を確認
+            if (data.data && data.data.length > 0) {
+                // URLベースのレスポンスを想定
+                if (data.data[0].url) {
+                    const imageUrl = data.data[0].url;
+                    
+                    // CORSバイパス用のプロキシを使用して画像を表示
+                    const corsProxyUrl = 'https://corsproxy.io/?';
+                    resultImage.src = corsProxyUrl + encodeURIComponent(imageUrl);
+                }
+                // Base64レスポンスを想定
+                else if (data.data[0].b64_json) {
+                    const imageData = data.data[0].b64_json;
+                    resultImage.src = `data:image/png;base64,${imageData}`;
+                }
+                else {
+                    throw new Error('APIからの応答に画像データが含まれていません');
+                }
+                
+                // 結果表示
+                hideElement(loadingContainer);
+                showElement(resultContainer);
+            } else {
+                throw new Error('APIからの応答に画像データが含まれていません');
+            }
         } catch (error) {
             console.error('Error generating image:', error);
             
