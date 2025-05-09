@@ -197,8 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     prompt: prompt,
                     size: settings.size,
                     quality: settings.quality,
-                    n: 1, // 生成する画像の数
-                    response_format: 'b64_json'  // Base64形式で画像を取得
+                    n: 1 // 生成する画像の数
+                    // response_formatパラメータを削除
                 })
             });
             
@@ -208,9 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.error?.message || 'APIエラーが発生しました');
             }
             
-            // 画像の表示（Base64形式）
-            const imageData = data.data[0].b64_json;
-            resultImage.src = `data:image/png;base64,${imageData}`;
+            // 画像の表示（URL形式として扱う）
+            // 注意: CORSの問題が発生する可能性があります
+            // その場合はこの下のコメントアウトされた代替方法を試してください
+            const imageUrl = data.data[0].url;
+            
+            // CORSバイパス用のプロキシを使用して画像を表示
+            const corsProxyUrl = 'https://corsproxy.io/?';
+            resultImage.src = corsProxyUrl + encodeURIComponent(imageUrl);
             
             // 結果表示
             hideElement(loadingContainer);
