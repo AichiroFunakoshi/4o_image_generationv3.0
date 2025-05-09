@@ -185,22 +185,17 @@ document.addEventListener('DOMContentLoaded', () => {
         hideElement(errorMessage);
         
         try {
-            // 最小限のパラメータでOpenAI APIを呼び出し
+            // 参考サイトの情報を元に、正しいパラメータを設定
             const requestBody = {
                 model: settings.model,
                 prompt: prompt,
-                n: 1
+                n: 1, // 生成する画像の数
+                size: settings.size, 
+                quality: settings.quality
+                // output_formatパラメータは不要 - デフォルトで base64_json が返される
             };
             
-            // サイズパラメータが設定されている場合は追加
-            if (settings.size) {
-                requestBody.size = settings.size;
-            }
-            
-            // 品質パラメータが設定されている場合は追加
-            if (settings.quality && settings.quality !== 'auto') {
-                requestBody.quality = settings.quality;
-            }
+            console.log('APIリクエスト:', requestBody);
             
             const response = await fetch('https://api.openai.com/v1/images/generations', {
                 method: 'POST',
@@ -220,28 +215,29 @@ document.addEventListener('DOMContentLoaded', () => {
             // APIからのレスポンスをコンソールに出力（デバッグ用）
             console.log('API Response:', data);
             
-            // データの構造を確認
+            // データの構造を確認 - 参考情報によれば、b64_jsonが返されるはず
             if (data.data && data.data.length > 0) {
-                // URLベースのレスポンスを想定
-                if (data.data[0].url) {
+                if (data.data[0].b64_json) {
+                    const imageData = data.data[0].b64_json;
+                    resultImage.src = `data:image/png;base64,${imageData}`;
+                    
+                    // 結果表示
+                    hideElement(loadingContainer);
+                    showElement(resultContainer);
+                } else if (data.data[0].url) {
+                    // 万が一URLが返された場合のバックアッププラン
                     const imageUrl = data.data[0].url;
                     
                     // CORSバイパス用のプロキシを使用して画像を表示
                     const corsProxyUrl = 'https://corsproxy.io/?';
                     resultImage.src = corsProxyUrl + encodeURIComponent(imageUrl);
-                }
-                // Base64レスポンスを想定
-                else if (data.data[0].b64_json) {
-                    const imageData = data.data[0].b64_json;
-                    resultImage.src = `data:image/png;base64,${imageData}`;
-                }
-                else {
+                    
+                    // 結果表示
+                    hideElement(loadingContainer);
+                    showElement(resultContainer);
+                } else {
                     throw new Error('APIからの応答に画像データが含まれていません');
                 }
-                
-                // 結果表示
-                hideElement(loadingContainer);
-                showElement(resultContainer);
             } else {
                 throw new Error('APIからの応答に画像データが含まれていません');
             }
