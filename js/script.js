@@ -40,15 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
         tag.addEventListener('click', () => addTagToPrompt(tag.dataset.tag));
     });
     
-    // サイズ選択のイベントリスナー
-    const sizeCards = document.querySelectorAll('.setting-group:nth-of-type(1) .option-card');
-    sizeCards.forEach(card => {
+    // サイズ選択のイベントリスナー - 直接要素を指定
+    const sizeOptions = document.querySelectorAll('#settings-section .setting-group:nth-of-type(2) .option-card');
+    sizeOptions.forEach(card => {
         card.addEventListener('click', () => selectOption(card, 'size'));
     });
     
-    // 品質選択のイベントリスナー
-    const qualityCards = document.querySelectorAll('.setting-group:nth-of-type(2) .option-card');
-    qualityCards.forEach(card => {
+    // 品質選択のイベントリスナー - 直接要素を指定
+    const qualityOptions = document.querySelectorAll('#settings-section .setting-group:nth-of-type(3) .option-card');
+    qualityOptions.forEach(card => {
         card.addEventListener('click', () => selectOption(card, 'quality'));
     });
     
@@ -77,7 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // デフォルト設定の選択状態を設定
-        selectDefaultOptions();
+        setTimeout(() => {
+            selectDefaultOptions();
+        }, 100);
     }
     
     // APIキーの保存
@@ -105,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             hideSection(apiKeySection);
             showSection(settingsSection);
+            selectDefaultOptions(); // 設定画面に切り替わった後に選択状態を設定
         }, 1000);
     }
     
@@ -149,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // デフォルトオプションの選択
     function selectDefaultOptions() {
         // サイズのデフォルト選択
-        const defaultSizeCard = document.querySelector(`.setting-group:nth-of-type(1) .option-card[data-value="${settings.size}"]`);
+        const defaultSizeCard = document.querySelector(`#settings-section .setting-group:nth-of-type(2) .option-card[data-value="${settings.size}"]`);
         if (defaultSizeCard) defaultSizeCard.classList.add('selected');
         
         // 品質のデフォルト選択
-        const defaultQualityCard = document.querySelector(`.setting-group:nth-of-type(2) .option-card[data-value="${settings.quality}"]`);
+        const defaultQualityCard = document.querySelector(`#settings-section .setting-group:nth-of-type(3) .option-card[data-value="${settings.quality}"]`);
         if (defaultQualityCard) defaultQualityCard.classList.add('selected');
     }
     
