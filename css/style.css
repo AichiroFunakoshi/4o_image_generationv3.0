@@ -187,6 +187,10 @@ header h1 {
     text-align: center;
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 140px; /* 固定の高さを設定 */
 }
 
 .option-card:hover {
@@ -220,6 +224,7 @@ header h1 {
 
 .option-label {
     font-weight: 500;
+    margin-top: auto; /* ラベルを下に配置 */
 }
 
 /* プロンプトエリア */
@@ -272,25 +277,24 @@ textarea:focus {
 }
 
 /* 画像サイズアイコン */
+.square-icon, .landscape-icon, .portrait-icon {
+    margin: 10px auto;
+    border: 2px solid var(--primary-color);
+}
+
 .square-icon {
     width: 40px;
     height: 40px;
-    margin: 0 auto;
-    border: 2px solid var(--primary-color);
 }
 
 .landscape-icon {
     width: 60px;
     height: 40px;
-    margin: 0 auto;
-    border: 2px solid var(--primary-color);
 }
 
 .portrait-icon {
     width: 40px;
     height: 60px;
-    margin: 0 auto;
-    border: 2px solid var(--primary-color);
 }
 
 /* 結果セクション */
