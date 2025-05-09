@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     prompt: prompt,
                     size: settings.size,
                     quality: settings.quality,
-                    n:, 1, // 生成する画像の数
+                    n: 1, // 生成する画像の数
                     response_format: 'b64_json'  // Base64形式で画像を取得
                 })
             });
