@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
         hideElement(errorMessage);
         
         try {
-            // OpenAI API呼び出し
-            const response = await fetch('https://api.openai.com/v1/images/generate', {
+            // OpenAI API呼び出し - 正しいエンドポイント 'generations' を使用
+            const response = await fetch('https://api.openai.com/v1/images/generations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     prompt: prompt,
                     size: settings.size,
                     quality: settings.quality,
-                    output_format: 'png',
+                    n: 1, // 生成する画像の数
                     response_format: 'b64_json'
                 })
             });
