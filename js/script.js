@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.getElementById('result-section');
     const apiKeyInput = document.getElementById('api-key-input');
     const saveApiKeyBtn = document.getElementById('save-api-key');
+    const changeApiKeyBtn = document.getElementById('change-api-key');
     const apiKeyStatus = document.getElementById('api-key-status');
     const promptInput = document.getElementById('prompt-input');
     const generateButton = document.getElementById('generate-button');
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 設定値を保存する変数
     let settings = {
-        apiKey: localStorage.getItem('openai_api_key') || '',
+        apiKey: '',
         size: '1536x1024',
         quality: 'auto',
         model: 'gpt-image-1'
@@ -28,6 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // APIキー保存ボタンのイベントリスナー
     saveApiKeyBtn.addEventListener('click', saveApiKey);
+    
+    // APIキー変更ボタンのイベントリスナー
+    if (changeApiKeyBtn) {
+        changeApiKeyBtn.addEventListener('click', showApiKeySection);
+    }
     
     // タグクリックのイベントリスナー
     document.querySelectorAll('.tag').forEach(tag => {
@@ -57,13 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // アプリの初期化
     function initApp() {
+        // APIキーをlocalStorageから取得
+        const storedApiKey = localStorage.getItem('openai_api_key');
+        
         // APIキーが保存されているか確認
-        if (settings.apiKey) {
-            apiKeyInput.value = '********-****-****-****-************'; // マスク表示
+        if (storedApiKey) {
+            settings.apiKey = storedApiKey;
             showSection(settingsSection);
             hideSection(apiKeySection);
         } else {
             showSection(apiKeySection);
+            hideSection(settingsSection);
         }
         
         // デフォルト設定の選択状態を設定
@@ -96,6 +106,17 @@ document.addEventListener('DOMContentLoaded', () => {
             hideSection(apiKeySection);
             showSection(settingsSection);
         }, 1000);
+    }
+    
+    // APIキー入力画面を表示
+    function showApiKeySection() {
+        hideSection(settingsSection);
+        showSection(apiKeySection);
+        
+        // 保存されているAPIキーがあれば、入力フィールドに設定する
+        if (settings.apiKey) {
+            apiKeyInput.value = settings.apiKey;
+        }
     }
     
     // タグをプロンプトに追加
@@ -138,6 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 画像生成
     async function generateImage() {
+        // APIキーが設定されているか確認
+        if (!settings.apiKey) {
+            alert('APIキーが設定されていません。APIキーを入力してください。');
+            showApiKeySection();
+            return;
+        }
+        
         const prompt = promptInput.value.trim();
         
         if (!prompt) {
@@ -186,6 +214,19 @@ document.addEventListener('DOMContentLoaded', () => {
             showElement(resultContainer);
         } catch (error) {
             console.error('Error generating image:', error);
+            
+            // APIキーが無効な場合、APIキー入力画面に戻る
+            if (error.message && (
+                error.message.includes('API key') || 
+                error.message.includes('Authentication') || 
+                error.message.includes('authorization')
+            )) {
+                alert('APIキーが無効です。正しいAPIキーを入力してください。');
+                localStorage.removeItem('openai_api_key');
+                settings.apiKey = '';
+                showApiKeySection();
+                return;
+            }
             
             // エラーメッセージの表示
             hideElement(loadingContainer);
