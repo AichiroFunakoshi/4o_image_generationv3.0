@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>AI画像生成ツール</h1>
+            <h1>ImageCraft AI</h1>
         </header>
 
         <main>
@@ -27,11 +27,14 @@
 
             <!-- 設定セクション（最初は非表示） -->
             <section id="settings-section" class="section hidden">
-                <h2>画像設定</h2>
+                <!-- APIキー情報 -->
                 <div class="api-key-info">
                     <p>APIキー: <span id="api-key-mask">********-****-****-****-************</span></p>
                     <button id="change-api-key" class="btn secondary btn-sm">APIキーを変更</button>
                 </div>
+                
+                <h2>画像設定</h2>
+                
                 <!-- サイズ選択 -->
                 <div class="setting-group">
                     <h3>サイズ選択</h3>
@@ -57,15 +60,15 @@
                     <div class="options-container">
                         <div class="option-card" data-value="standard">
                             <div class="option-icon"><i class="fas fa-image"></i></div>
-                            <div class="option-label">標準</div>
+                            <div class="option-label">Standard</div>
                         </div>
                         <div class="option-card" data-value="hd">
                             <div class="option-icon"><i class="fas fa-image"></i><i class="fas fa-star quality-star"></i></div>
-                            <div class="option-label">高品質</div>
+                            <div class="option-label">Fine Detail</div>
                         </div>
                         <div class="option-card" data-value="auto">
                             <div class="option-icon"><i class="fas fa-magic"></i></div>
-                            <div class="option-label">自動 (推奨)</div>
+                            <div class="option-label">Balanced (推奨)</div>
                         </div>
                     </div>
                 </div>
