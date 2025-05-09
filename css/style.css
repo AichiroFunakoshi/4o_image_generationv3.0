@@ -112,6 +112,27 @@ header h1 {
     color: var(--danger-color);
 }
 
+/* APIキー情報 */
+.api-key-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+.api-key-info p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
 /* ボタン */
 .btn {
     padding: 12px 20px;
@@ -364,6 +385,11 @@ footer {
     
     .result-actions .btn {
         width: 100%;
+    }
+
+    .api-key-info {
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
