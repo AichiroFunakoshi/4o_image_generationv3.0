@@ -152,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // デフォルトオプションの選択
     function selectDefaultOptions() {
         // サイズのデフォルト選択
-        const defaultSizeCard = document.querySelector(`#settings-section .setting-group:nth-of-type(2) .option-card[data-value="${settings.size}"]`);
+        const defaultSizeCard = document.querySelector(`#settings-section .setting-group:nth-of-type(2) .option-card[data-value=\"${settings.size}\"]`);
         if (defaultSizeCard) defaultSizeCard.classList.add('selected');
         
         // 品質のデフォルト選択
-        const defaultQualityCard = document.querySelector(`#settings-section .setting-group:nth-of-type(3) .option-card[data-value="${settings.quality}"]`);
+        const defaultQualityCard = document.querySelector(`#settings-section .setting-group:nth-of-type(3) .option-card[data-value=\"${settings.quality}\"]`);
         if (defaultQualityCard) defaultQualityCard.classList.add('selected');
     }
     
@@ -197,8 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     prompt: prompt,
                     size: settings.size,
                     quality: settings.quality,
-                    n: 1, // 生成する画像の数
-                    response_format: 'b64_json'
+                    n: 1 // 生成する画像の数
                 })
             });
             
@@ -209,8 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             // 画像の表示
-            const imageData = data.data[0].b64_json;
-            resultImage.src = `data:image/png;base64,${imageData}`;
+            const imageUrl = data.data[0].url;
+            resultImage.src = imageUrl;
             
             // 結果表示
             hideElement(loadingContainer);
