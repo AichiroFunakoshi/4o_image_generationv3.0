@@ -120,7 +120,8 @@ header h1 {
     padding: 10px 15px;
     background-color: var(--light-bg);
     border-radius: var(--border-radius);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .api-key-info p {
