@@ -6,6 +6,19 @@
     <title>画像生成アプリ</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA対応のためのメタタグとリンク -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#4a6cf7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AI画像生成">
+    <link rel="apple-touch-icon" href="./images/icons/apple-touch-icon-180x180.png">
+    <!-- iPhone用のアイコン -->
+    <link rel="apple-touch-icon" sizes="120x120" href="./images/icons/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./images/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="./images/icons/icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/icons/apple-touch-icon-180x180.png">
 </head>
 <body>
     <div class="container">
@@ -125,5 +138,21 @@
     </div>
 
     <script src="js/script.js"></script>
+    
+    <!-- Service Worker登録スクリプト -->
+    <script>
+        // Service Workerの登録
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('Service Workerの登録に成功しました。スコープ: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Workerの登録に失敗しました: ', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
