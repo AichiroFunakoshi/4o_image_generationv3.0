@@ -1,7 +1,7 @@
 {
-  "name": "AI画像生成ツール",
-  "short_name": "AI画像生成",
-  "description": "OpenAI APIを使用してテキストプロンプトから画像を生成するアプリ",
+  "name": "ImageCraft",
+  "short_name": "ImageCraft",
+  "description": "gpt-image-1 APIでテキストプロンプトから画像を生成するアプリ",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8f9fa",
